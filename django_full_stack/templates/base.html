@@ -1,0 +1,41 @@
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %} Annonces App {% endblock %} </title>
+</head>
+<body>
+    <header class="bg-light p-3 d-flex align-items-center justify-content-between sticky-top">
+        <h4>Django App</h4>
+        <nav class="d-flex align-items-center justify-content-between w-50">
+            <a class="text-secondary text-decoration-none"  href="{% url 'home' %}">Home</a>
+            <a class="text-secondary text-decoration-none"  href="{% url 'home' %}">Annonces Vlaides</a>
+            <a class="text-secondary text-decoration-none"  href="{% url 'home' %}">Annonce Rejetes</a>
+            <a class="text-secondary text-decoration-none"  href="{% url 'home' %}">Annonce En attente</a>
+        </nav>
+
+        <div class="d-flex align-items-center gap-3">
+            <button class="btn btn-primary">Ajouter Annonce</button>
+            
+            {% if role == 'ADMIN' %}
+                <button class="btn btn-primary">Ajouter Category</button>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+                <form class="p-0 m-0" method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            {% endif %}
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

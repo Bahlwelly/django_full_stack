@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %} Home page  {% endblock %}
+
+{% block content %}
+{% for cat in categories %}
+<h5 class="w-100 bg-light p-2 mt-1">{{ cat.name }}</h5>
+<div class="p-4">
+        {% for an in cat.annonce_set.all %}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{ an.image.url }}" alt=" {{ an.titre }} ">
+                <div class="card-body">
+                    <h5 class="card-title">{{ an.titre }}</h5>
+                    <p class="card-text"> {{ an.description }} </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Prix : {{ an.prix }} </li>
+                    <li class="list-group-item">Status : {{ an.status }} </li>
+                </ul>
+                <div class="card-body">
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+                </div>
+        {% empty %}
+            <p>No annonces in this category</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock %}
