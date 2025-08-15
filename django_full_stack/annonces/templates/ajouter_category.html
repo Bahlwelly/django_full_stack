@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %} Ajouter Annonce {% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="p-4 rounded shadow bg-light" style="width: 600px;">
+        <h3 class="text-center mb-4">Enregistrer un annonce</h3>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post" enctype="multipart/form-data" class="p-0 m-0" novalidate>
+            {% csrf_token %}
+                {% bootstrap_field form.name %}
+                {% if form.is_bound and form.name.errors %}
+                     <p class="text-danger">
+                        {{ form.name.errors }}
+                     </p>                    
+                {% endif %}
+
+                {% bootstrap_button button_type="submit" content="Enregistrer" %}
+        </form>
+    </div>
+</div>
+{% endblock %}

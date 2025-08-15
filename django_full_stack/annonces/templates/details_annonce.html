@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %} Details : {{ annonce }} {% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="p-5 d-flex align-items-start gap-5">
+        <div>
+            <div class="card">
+                <h4 class="card-header"> Details : {{ annonce }}  </h4>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"> <span>Description : </span> {{ annonce.description }} </li>
+                    <li class="list-group-item"> <span>Prix : </span> {{ annonce.prix }} </p>
+                    <li class="list-group-item"> <span>Category : </span> {{ annonce.category }} </li>
+                    <li class="list-group-item"> <span>Status : </span> {{ annonce.status }} </li>
+                </ul>
+            </div>
+
+            {% if is_publisher %}   
+                <div class="mt-4 d-flex align-items-center gap-3">
+                    <form action="{% url 'supprimer_annonce' annonce.id %}" method="POST" class="p-0 m-0">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                    
+                    <a href="{% url 'modifier_annonce' annonce.id %}">
+                        <button class="btn btn-primary">Modifier</button>
+                    </a>
+                </div>
+            {% else %}
+                <p class="alert alert-danger mt-4 text-center"> Vous n'etes pas autoriser a modifier ou supprimer cet annonce </p>
+            {% endif %}
+            {% if role == 'ADMIN' %}
+                <div class="mt-4 d-flex align-items-center gap-3">
+                    <a href="{% url 'modifier_status' annonce.id 'REJETE'%}">
+                        <button class="btn btn-danger">Rejeter</button>
+                    </a>
+
+                    <a href="{% url 'modifier_status' annonce.id 'VALIDE'%}">
+                        <button class="btn btn-success">Valider</button>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        <div>
+            <img src="{{ annonce.image.url }}" class="img-thumbnail" style="width: 25rem;" alt="">
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %} Ajouter Annonce {% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="p-4 rounded shadow bg-light" style="width: 600px;">
+        <h3 class="text-center mb-4">Enregistrer un annonce</h3>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post" enctype="multipart/form-data" class="p-0 m-0" novalidate>
+            {% csrf_token %}
+
+            <div class="d-flex gap-5">
+                <div>
+                    {% bootstrap_field form.titre %}
+                    {% if form.is_bound and form.titre.errors %}
+                         <p class="text-danger">
+                            {{ form.titre.errors }}
+                         </p>
+                    {% endif %}
+                    
+                    {% bootstrap_field form.description %}
+                    {% if form.is_bound and form.description.errors %}
+                         <p class="text-danger">
+                            {{ form.description.errors }}
+                         </p>
+                    {% endif %}
+
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        {% bootstrap_button button_type="submit" content="Enregistrer" %}
+                    </div>
+                </div>
+    
+                <div>
+    
+                    {% bootstrap_field form.prix %}
+                    {% if form.is_bound and form.prix.errors %}
+                         <p class="text-danger">
+                            {{ form.prix.errors }}
+                         </p>
+                    {% endif %}
+                    {% bootstrap_field form.category %}
+                    {% if form.is_bound and form.category.errors %}
+                         <p class="text-danger">
+                            {{ form.category.errors }}
+                         </p>
+                    {% endif %}
+                  
+                    {% bootstrap_field form.image %}
+                    {% if form.is_bound and form.image.errors %}
+                         <p class="text-danger">
+                            {{ form.image.errors }}
+                         </p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

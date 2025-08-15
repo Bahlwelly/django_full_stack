@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %} Annonces Privees {% endblock %}
+
+
+{% block content %}
+    <div class="container p-4">
+        <div class="row">
+            {% for an in annonces %}
+                <div class="col-md-4  mb-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ an.image.url }}" alt=" {{ an.titre }} ">
+            
+                        <div class="card-body">
+                            <h5 class="card-title">{{ an.titre }}</h5>
+                            <p class="card-text"> {{ an.description }} </p>
+                        </div>
+            
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Prix : {{ an.prix }} </li>
+                            <li class="list-group-item">Status : {{ an.status }} </li>
+                        </ul>
+            
+                        <div class="card-body">
+                            <a href="{% url 'details_annonce' an.id %}" class="card-link">Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Il n'y a pas des annonces pour vous</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

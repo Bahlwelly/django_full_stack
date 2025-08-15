@@ -40,11 +40,16 @@ INSTALLED_APPS = [
     'annonces',
     'authentification',
     "django_bootstrap5",
+    'axes',
 ]
 
-
+AUTHENTICATION_BACKENDS = [
+    "axes.backends.AxesBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
 
 MIDDLEWARE = [
+    'axes.middleware.AxesMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,6 +58,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AXES_FAILURE_LIMIT = 3              
+AXES_COOLOFF_TIME = 5               
+AXES_LOCKOUT_CALLABLE = None 
+AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = False
 
 ROOT_URLCONF = 'django_full_stack.urls'
 
@@ -67,7 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django_full_stack.context_processors.role'
+                'django_full_stack.context_processors.get_role'
             ],
         },
     },

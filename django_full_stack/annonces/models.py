@@ -18,10 +18,12 @@ class Annonce (models.Model) :
     image = models.ImageField(upload_to='media/annonces', null=True, blank=True)
     STATUS = [
         ('EN ATTENTE', 'En attente'),
-        ('EN ATTENTE', 'Vlide'),
+        ('VALIDE', 'Valide'),
         ('REJETE', 'Rejete'),
     ]
 
     status = models.CharField(max_length=10, choices=STATUS, default='EN ATTENTE')
 
+    def __str__(self):
+        return self.titre
     

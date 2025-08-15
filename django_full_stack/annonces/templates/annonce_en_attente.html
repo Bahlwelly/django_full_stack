@@ -1,9 +1,8 @@
 {% extends "base.html" %}
-{% block title %} Home page  {% endblock %}
+{% block title %} Annonces En Attente {% endblock %}
 
 {% block content %}
-
-    {% if messages %}
+   {% if messages %}
     {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
             {{ message }}
@@ -12,7 +11,7 @@
     {% endfor %}
     {% endif %}
 
-    {% for cat in categories %}
+    {% for cat in categorys %}
         <h5 class="w-100 bg-light p-2 mt-1">{{ cat.name }}</h5>
         <div class="p-4 d-flex align-items-center gap-5">
             {% for an in cat.annonce_set.all %}
@@ -33,9 +32,9 @@
                         <a href="{% url 'details_annonce' an.id %}" class="card-link">Details</a>
                     </div>
                 </div>
-            {% empty %}
-                <p>Il n'y a pas des annonces dnas cette categorie</p>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
+    {% empty %}
+        <h3 class="alert alert-info">Il n'y a pas des annonces en attente</h3>
     {% endfor %}
 {% endblock %}
